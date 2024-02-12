@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:pfe_project/features/authentifications/screens/signup/verify_email.dart';
 import 'package:pfe_project/features/authentifications/screens/signup/widgets/terms_conditions_checkbox.dart';
 import 'package:pfe_project/utils/constants/sizes.dart';
 import 'package:pfe_project/utils/constants/text_strings.dart';
@@ -119,7 +122,8 @@ class _SignupFormState extends State<SignupForm> {
           SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                  onPressed: () {}, child: const Text(TTexts.createAccount))),
+                  onPressed: () => Get.to(() => VerifyEmailScreen()),
+                  child: const Text(TTexts.createAccount)))
         ],
       ),
     );
