@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:pfe_project/features/authentifications/screens/password_configuration/forget_password.dart';
 import 'package:pfe_project/features/authentifications/screens/signup/signup.dart';
 import 'package:pfe_project/utils/constants/sizes.dart';
 import 'package:pfe_project/utils/constants/text_strings.dart';
@@ -47,9 +49,8 @@ class LoginForm extends StatelessWidget {
 
                 /// Forget Password
                 TextButton(
-                  onPressed: () {},
-                  child: const Text(TTexts.forgetPassword),
-                ),
+                    onPressed: () => Get.to(() => const ForgetPassword()),
+                    child: const Text(TTexts.forgetPassword)),
               ],
             ), // Row
             const SizedBox(height: TSizes.spaceBtwSections),

@@ -1,40 +1,43 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pfe_project/commons/styles/spacing_styles.dart';
+import 'package:get/get.dart';
+import 'package:pfe_project/utils/constants/image_strings.dart';
 import 'package:pfe_project/utils/constants/sizes.dart';
 import 'package:pfe_project/utils/constants/text_strings.dart';
 import 'package:pfe_project/utils/helpers/helper_functions.dart';
 
-class SuccessScreen extends StatelessWidget {
-  const SuccessScreen(
-      {super.key,
-      required this.image,
-      required this.title,
-      required this.subTitle,
-      required this.onPressed});
-
-  final String image, title, subTitle;
-  final VoidCallback onPressed;
+class ResetPassword extends StatelessWidget {
+  const ResetPassword({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            onPressed: () => Get.back(),
+            icon: const Icon(CupertinoIcons.clear),
+          )
+        ],
+      ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: TSpacingStyle.paddingWithAppBarHeight * 2,
+          padding: const EdgeInsets.all(TSizes.defaultSpace),
           child: Column(
             children: [
               /// Image
               Image(
-                  image: AssetImage(image),
+                  image: const AssetImage(TImages.deliveredEmailIllustration),
                   width: THelperFunctions.screenWidth() * 0.6),
               const SizedBox(height: TSizes.spaceBtwSections),
 
               /// Title & SubTitle
-              Text(title,
+              Text(TTexts.changeYourPasswordTitle,
                   style: Theme.of(context).textTheme.headlineMedium,
                   textAlign: TextAlign.center),
               const SizedBox(height: TSizes.spaceBtwItems),
-              Text(subTitle,
+              Text(TTexts.changeYourPasswordSubTitle,
                   style: Theme.of(context).textTheme.labelMedium,
                   textAlign: TextAlign.center),
               const SizedBox(height: TSizes.spaceBtwSections),
@@ -43,12 +46,18 @@ class SuccessScreen extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                    onPressed: onPressed, child: const Text(TTexts.tContinue)),
+                    onPressed: () {}, child: const Text(TTexts.done)),
+              ),
+              const SizedBox(height: TSizes.spaceBtwSections),
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                    onPressed: () {}, child: const Text(TTexts.resendEmail)),
               ),
             ],
           ),
         ),
       ),
     );
-  } // build
+  }
 }
