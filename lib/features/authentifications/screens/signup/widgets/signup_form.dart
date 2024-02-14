@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:pfe_project/features/authentifications/screens/signup/verify_email.dart';
+import 'package:pfe_project/features/authentifications/controllers/signup/signup_controller.dart';
 import 'package:pfe_project/features/authentifications/screens/signup/widgets/terms_conditions_checkbox.dart';
 import 'package:pfe_project/utils/constants/sizes.dart';
 import 'package:pfe_project/utils/constants/text_strings.dart';
+import 'package:pfe_project/utils/validators/validation.dart';
 
 class SignupForm extends StatefulWidget {
   const SignupForm({
@@ -27,7 +27,9 @@ class _SignupFormState extends State<SignupForm> {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(SignupController());
     return Form(
+      key: controller.signupFormKey,
       child: Column(
         children: [
           /// Role Dropdown
@@ -46,12 +48,12 @@ class _SignupFormState extends State<SignupForm> {
             }).toList(),
             decoration: InputDecoration(
               labelText: "Role",
-              prefixIcon: Icon(Iconsax.user),
+              prefixIcon: const Icon(Iconsax.user),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8.0),
               ),
               contentPadding:
-                  EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+                  const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
             ),
           ),
           const SizedBox(height: TSizes.spaceBtwInputFields),
@@ -61,6 +63,9 @@ class _SignupFormState extends State<SignupForm> {
             children: [
               Expanded(
                 child: TextFormField(
+                  validator: (value) =>
+                      TValidator.validateEmptyText('first name', value),
+                  controller: controller.firstName,
                   expands: false,
                   decoration: const InputDecoration(
                       labelText: TTexts.firstName,
@@ -70,6 +75,9 @@ class _SignupFormState extends State<SignupForm> {
               const SizedBox(width: TSizes.spaceBtwInputFields),
               Expanded(
                 child: TextFormField(
+                  validator: (value) =>
+                      TValidator.validateEmptyText('last name', value),
+                  controller: controller.lastName,
                   expands: false,
                   decoration: const InputDecoration(
                       labelText: TTexts.lastName,
@@ -82,6 +90,9 @@ class _SignupFormState extends State<SignupForm> {
 
           /// Username
           TextFormField(
+            validator: (value) =>
+                TValidator.validateEmptyText('username', value),
+            controller: controller.username,
             expands: false,
             decoration: const InputDecoration(
                 labelText: TTexts.username,
@@ -91,6 +102,8 @@ class _SignupFormState extends State<SignupForm> {
 
           /// Email
           TextFormField(
+            validator: (value) => TValidator.validateEmail(value),
+            controller: controller.email,
             decoration: const InputDecoration(
                 labelText: TTexts.email, prefixIcon: Icon(Iconsax.direct)),
           ), // TextFormField
@@ -98,6 +111,8 @@ class _SignupFormState extends State<SignupForm> {
 
           /// Phone Number
           TextFormField(
+            validator: (value) => TValidator.validatePhoneNumber(value),
+            controller: controller.phoneNumber,
             decoration: const InputDecoration(
                 labelText: TTexts.phoneNo, prefixIcon: Icon(Iconsax.call)),
           ), // TextFormField
@@ -105,6 +120,8 @@ class _SignupFormState extends State<SignupForm> {
 
           /// Password
           TextFormField(
+            validator: (value) => TValidator.validatePassword(value),
+            controller: controller.password,
             obscureText: true,
             decoration: const InputDecoration(
               labelText: TTexts.password,
@@ -122,7 +139,7 @@ class _SignupFormState extends State<SignupForm> {
           SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                  onPressed: () => Get.to(() => const VerifyEmailScreen()),
+                  onPressed: () => controller.signup(),
                   child: const Text(TTexts.createAccount)))
         ],
       ),
